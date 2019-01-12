@@ -1,18 +1,22 @@
+const legData = require('../data/legData');
+const stopData = require('../data/stopData');
+const driverData = require('../data/driverData');
+
 async function routes (fastify, options) {
   fastify.get('/', async (request, reply) => {
-    return { hello: 'world' }
+    return { info: 'main' }
   })
 
   fastify.get('/legs', async(request, reply) => {
-    return { legs: 'legs'}
+    return { legData }
   })
 
   fastify.get('/stops', async(request, reply) => {
-    return { stops: 'stops'}
+    return { stopData}
   })
 
   fastify.get('/driver', async(request, reply) => {
-    return { driver: 'driver'}
+    return { driverData }
   })
 }
 
