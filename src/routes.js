@@ -2,7 +2,7 @@ const legData = require('../data/legData');
 const stopData = require('../data/stopData');
 const driverData = require('../data/driverData');
 
-async function routes (fastify, options) {
+async function routes (fastify, options) {  
   fastify.get('/', async (request, reply) => {
     return { info: 'main' }
   })
@@ -20,4 +20,4 @@ async function routes (fastify, options) {
   })
 }
 
-module.exports = routes
+module.exports = routes;
