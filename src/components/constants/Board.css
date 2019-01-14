@@ -1,8 +1,17 @@
 .Board {
   position: relative;
   margin: 0 auto;
-  background-color: #000;
+  background-color: #fff;
   background-image:
-    linear-gradient(#333 1px, transparent 1px),
-    linear-gradient(90deg, #333 1px, transparent 1px);
+    linear-gradient(#808080 1px, transparent 1px),
+    linear-gradient(90deg, #808080 1px, transparent 1px);
+}
+
+.Cell {
+  background: #000;
+  content: 'hi';
+  position: absolute;
+}
+.Cell::before{
+  content: attr(data-before);
 }
