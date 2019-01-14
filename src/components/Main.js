@@ -1,6 +1,4 @@
 import React, { Component } from 'react'; 
-import { Button } from 'reactstrap';
-import Table from './constants/Table';
 
 class MainPage extends Component {
   constructor(props){
@@ -8,50 +6,31 @@ class MainPage extends Component {
     this.state = {
       fetching: false,
       haveData: false,
-      data: '', 
+      legs: '',
+      stops: '', 
     }
   }
 
-  fetchData = (endpoint) => {
+  componentDidMount = () => {
     this.setState({fetching: true});
-    const url = `http://localhost:3000/${endpoint}`;
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      this.setState({
-        fetching: false,
-        haveData: true,
-        data
-      })
-      console.log('state', this.state.data);
+    Promise.all([
+      fetch('http://localhost:3000/legs'),
+      fetch('http://localhost:3000/stops')
+    ])
+    .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+    .then(([legs, stops]) => this.setState({
+      legs, 
+      stops,
+      fetching: false,
+      haveData: true,
     })
     .catch(err => console.warn('Error:', err));
   }
-
-  handleReset = () => {
-    this.setState({
-        fetching: false,
-        haveData: false
-    })
-  }
-  
   render(){
     const { haveData, fetching, data } = this.state;
     return(
-      haveData || fetching ? 
-      <Table 
-        fetching={fetching}
-        reset={this.handleReset}
-        data={data} 
-      />
-      :
       <div>
-        <Button
-          onClick={()=> {
-            this.fetchData('legs')
-          }}
-        >Get Legs
-        </Button>
+        LANDING PAGE
       </div>
     )
   }
