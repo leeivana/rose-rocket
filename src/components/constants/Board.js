@@ -1,24 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Cell from './Cell';
 import './Board.css';
 
-const CELL_SIZE = window.innerHeight/110;
-const WIDTH = CELL_SIZE * 50;
+const CELL_SIZE = window.innerHeight/105;
+const WIDTH = window.innerWidth/2;
 const HEIGHT = window.innerHeight;
-class Cell extends React.Component {
-  render() {
-    const { x, y, stopName } = this.props;
-    console.log(stopName);
-    return (
-      <div data-before={stopName} className="Cell" style={{
-        left: `${CELL_SIZE * x + 1}px`,
-        top: `${CELL_SIZE * y + 1}px`,
-        width: `${CELL_SIZE - 1}px`,
-        height: `${CELL_SIZE - 1}px`,
-      }} />
-    );
-  }
-}
-class Board extends React.Component {
+class Board extends Component {
   constructor(props) {
     super(props);
     this.rows = HEIGHT / CELL_SIZE;
@@ -69,8 +56,11 @@ class Board extends React.Component {
   }
 
   render() {
-    const { cells } = this.state;
+    const { cells, fetching } = this.state;
     return (
+      fetching ? 
+      <div>LOADING...</div>
+      :
       <div>
         <div className="Board"
           style={{ width: WIDTH, height: HEIGHT,
@@ -79,8 +69,9 @@ class Board extends React.Component {
         >
           {cells.map(cell => (
             <Cell x={cell.x} y={cell.y}
-              key={`${cell.x},${cell.y}, ${cell.name}`}
+              key={cell.name}
               stopName={cell.name}
+              cell_size={CELL_SIZE}
             />
           ))}
         </div>
