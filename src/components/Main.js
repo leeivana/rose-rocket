@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; 
-
+import Board from './constants/Board';
 class MainPage extends Component {
   constructor(props){
     super(props)
@@ -8,6 +8,7 @@ class MainPage extends Component {
       haveData: false,
       legs: '',
       stops: '', 
+      driver: '',
     }
   }
 
@@ -15,22 +16,24 @@ class MainPage extends Component {
     this.setState({fetching: true});
     Promise.all([
       fetch('http://localhost:3000/legs'),
-      fetch('http://localhost:3000/stops')
+      fetch('http://localhost:3000/stops'),
+      fetch('http://localhost:3000/driver')
     ])
-    .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
-    .then(([legs, stops]) => this.setState({
+    .then(([res1, res2, res3]) => Promise.all([res1.json(), res2.json(), res3.json()]))
+    .then(([legs, stops, driver]) => this.setState({
       legs, 
       stops,
+      driver,
       fetching: false,
       haveData: true,
-    })
-    .catch(err => console.warn('Error:', err));
+    }))
+    .catch(err => console.warn('Error:', err))
   }
   render(){
     const { haveData, fetching, data } = this.state;
     return(
       <div>
-        LANDING PAGE
+        <Board />
       </div>
     )
   }
