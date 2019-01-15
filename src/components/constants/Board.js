@@ -40,10 +40,22 @@ class Board extends Component {
   }
 
   setDriverPoints = (legID) => {
+    let yDifference;
+    let xDifference;
     const stops = legID.split('');
     const coordinates = this.state.stops.filter((stop) => {
       return stop.name === stops[0] || stop.name === stops[1]
     });
+    if(coordinates[0].x === coordinates[1].x){
+      //sort array from lowest to highest based on y position
+      coordinates.sort((a, b) =>  a.y - b.y);
+      yDifference = Math.abs(coordinates[0].y - coordinates[1].y);
+    }
+    for(let i = 1; i < yDifference; i++) {
+      coordinates.push({
+        x: coordinates[0].x, y: coordinates[0].y + i,
+      })
+    }
     this.setState({
       path: coordinates,
     })
