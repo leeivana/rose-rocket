@@ -35,21 +35,25 @@ class Board extends Component {
       fetching: false,
     }))
     .then(() => {
-      this.setDriverPoints("JI");
+      this.calculatePath(this.state.activeLegID);
     })
     .catch(err => console.warn('Error:', err));
   }
 
-  setDriverPoints = (legID) => {
-    const path = [];
+  calculatePath = (legID) => {
     const stops = legID.split('');
     const coordinates = this.state.stops.filter((stop) => {
       return stop.name === stops[0] || stop.name === stops[1]
     });
     const xDifference = Math.abs(coordinates[0].x - coordinates[1].x)
     const yDifference = Math.abs(coordinates[0].y - coordinates[1].y);
-      //sort array from lowest to highest based on y position
+    this.setPath(coordinates, xDifference, yDifference);
+  }
+
+  setPath = (coordinates, xDifference, yDifference) => {
+    const path = [];
     if(xDifference){
+    // sort array from lowest to highest based on y position
     coordinates.sort((a, b) =>  a.x - b.x);
       for(let i = 1; i <= xDifference; i++) {
         path.push({
@@ -65,9 +69,6 @@ class Board extends Component {
         })
       }
     }
-
-
-    console.log(path);
 
     this.setState({
       path,
