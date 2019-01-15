@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cell from './Cell';
+import Path from './Path';
 import './Board.css';
 
 const CELL_SIZE = window.innerHeight/105;
@@ -13,7 +14,8 @@ class Board extends Component {
     this.board = this.makeEmptyBoard();
   }
   state = {
-    cells: [],
+    stops: [],
+    path: [],
   }
 
   componentDidMount = () => {
@@ -26,14 +28,28 @@ class Board extends Component {
     .then(([res1, res2, res3]) => Promise.all([res1.json(), res2.json(), res3.json()]))
     .then(([legs, stops, driver]) => this.setState({
       legs: legs.legData.legData, 
-      cells: stops.stopData.stopData,
-      driver: driver.driverData.driverData,
+      stops: stops.stopData.stopData,
+      activeLegID: driver.driverData.driverData[0].activeLegID,
+      legProgress: driver.driverData.driverData[0].legProgress,
       fetching: false,
     }))
-    .catch(err => console.warn('Error:', err))
+    .then(() => {
+      this.setDriverPoints(this.state.activeLegID);
+    })
+    .catch(err => console.warn('Error:', err));
   }
 
-  makeEmptyBoard() {
+  setDriverPoints = (legID) => {
+    const stops = legID.split('');
+    const coordinates = this.state.stops.filter((stop) => {
+      return stop.name === stops[0] || stop.name === stops[1]
+    });
+    this.setState({
+      path: coordinates,
+    })
+  }
+
+  makeEmptyBoard = () => {
     let board = [];
     for (let y = 0; y < this.rows; y++) {
       board[y] = [];
@@ -43,20 +59,9 @@ class Board extends Component {
     }
     return board;
   }
-  makeCells() {
-    let cells = [];
-    for (let y = 0; y < this.rows; y++) {
-      for (let x = 0; x < this.cols; x++) {
-        if (this.board[y][x]) {
-          cells.push({ x, y });
-        }
-      }
-    }
-    return cells;
-  }
 
   render() {
-    const { cells, fetching } = this.state;
+    const { stops, fetching, path } = this.state;
     return (
       fetching ? 
       <div>LOADING...</div>
@@ -67,15 +72,21 @@ class Board extends Component {
             backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}}
           ref={(n) => { this.boardRef = n; }}
         >
-          {cells.map(cell => (
-            <Cell x={cell.x} y={cell.y}
-              key={cell.name}
-              stopName={cell.name}
+          {stops.map(stop => (
+            <Cell x={stop.x} y={stop.y}
+              key={stop.name}
+              stopName={stop.name}
               cell_size={CELL_SIZE}
             />
           ))}
+          {path.map(point => (
+              <Path x={point.x} y={point.y}
+                key={`${point.x}, ${point.y}`}
+                cell_size={CELL_SIZE}
+              />
+            ))
+          }
         </div>
-        
       </div>
     );
   }
