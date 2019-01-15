@@ -16,6 +16,7 @@ class Board extends Component {
   state = {
     stops: [],
     path: [],
+    cellCount: '',
   }
 
   componentDidMount = () => {
@@ -34,30 +35,42 @@ class Board extends Component {
       fetching: false,
     }))
     .then(() => {
-      this.setDriverPoints(this.state.activeLegID);
+      this.setDriverPoints("JI");
     })
     .catch(err => console.warn('Error:', err));
   }
 
   setDriverPoints = (legID) => {
-    let yDifference;
-    let xDifference;
+    const path = [];
     const stops = legID.split('');
     const coordinates = this.state.stops.filter((stop) => {
       return stop.name === stops[0] || stop.name === stops[1]
     });
-    if(coordinates[0].x === coordinates[1].x){
+    const xDifference = Math.abs(coordinates[0].x - coordinates[1].x)
+    const yDifference = Math.abs(coordinates[0].y - coordinates[1].y);
       //sort array from lowest to highest based on y position
+    if(xDifference){
+    coordinates.sort((a, b) =>  a.x - b.x);
+      for(let i = 1; i <= xDifference; i++) {
+        path.push({
+          x: coordinates[0].x + i, y: coordinates[0].y,
+        })
+      }
+    }
+    if(yDifference){
       coordinates.sort((a, b) =>  a.y - b.y);
-      yDifference = Math.abs(coordinates[0].y - coordinates[1].y);
+      for(let i = 1; i < yDifference; i++) {
+        path.push({
+          x: xDifference ? path[path.length - 1].x : coordinates[0].x , y: coordinates[0].y + i
+        })
+      }
     }
-    for(let i = 1; i < yDifference; i++) {
-      coordinates.push({
-        x: coordinates[0].x, y: coordinates[0].y + i,
-      })
-    }
+
+
+    console.log(path);
+
     this.setState({
-      path: coordinates,
+      path,
     })
   }
 
