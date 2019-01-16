@@ -36,57 +36,48 @@ class Board extends Component {
       fetching: false,
     }))
     .then(() => {
-      this.calculatePath(this.state.activeLegID);
+      this.calculatePath("KL");
     })
     .catch(err => console.warn('Error:', err));
   }
 
   calculatePath = (legID) => {
     const stops = legID.split('');
-    const coordinates = this.state.stops.filter((stop) => {
+    const path = this.state.stops.filter((stop) => {
       return stop.name === stops[0] || stop.name === stops[1]
     });
-    const xDifference = Math.abs(coordinates[0].x - coordinates[1].x)
-    const yDifference = Math.abs(coordinates[0].y - coordinates[1].y);
-    this.setPaths(coordinates, xDifference, yDifference, stops[0], stops[1]);
+    const xDifference = Math.abs(path[0].x - path[1].x)
+    const yDifference = Math.abs(path[0].y - path[1].y);
+    this.setPaths(path, xDifference, yDifference);
   }
 
-  setPaths = (coordinates, xDifference, yDifference, startStop, endStop) => {
-    console.log(coordinates);
-    const path = [];
+  setPaths = (path, xDifference, yDifference) => {
     const pathTraversed = [];
-    const yExceptions = ['A', 'B', 'C', 'D', 'E'];
-    const xExceptions = ['H', 'I', 'J', 'K', 'L'];
+    const startStop = path[0];
+    const endStop = path[1];
     let cellsTraversed = Math.ceil((xDifference + yDifference) * this.state.legProgress);
-    if(xDifference){
-      for(let i = 1; i <= xDifference; i++) {
-        path.push({
-          x: xExceptions.includes(coordinates[0].name) ? coordinates[0].x - i : coordinates[0].x + i, y: coordinates[0].y,
+    for(let i = 0; i <= xDifference; i++) {
+      path.push({
+        x: startStop.x > endStop.x ? startStop.x - i : startStop.x + i , y: startStop.y
+      })
+      if(cellsTraversed !== 0) {
+        pathTraversed.push({
+          x: startStop.x > endStop.x ? startStop.x - i : startStop.x + i, y: startStop.y
         })
-        console.log('path', path);
-        if(cellsTraversed !== 0){
-          pathTraversed.push({
-            x: xExceptions.includes(coordinates[0].name) ? coordinates[0].x - i : coordinates[0].x + i, y: coordinates[0].y,
-          })
-          cellsTraversed--;
-        }
+        cellsTraversed--;
       }
     }
-    if(yDifference){
-      coordinates.sort((a, b) =>  a.y - b.y);
-      for(let i = 1; i < yDifference; i++) {
-        path.push({
-          x: xDifference ? path[path.length - 1].x : coordinates[0].x , y: coordinates[0].y + i
+    for(let i = 0; i <= yDifference; i++) {
+      path.push({
+        x: path[path.length - 1].x, y: startStop.y > endStop.y ?  startStop.y - i : startStop.y + i
+      })
+      if(cellsTraversed !== 0){
+        pathTraversed.push({
+          x: path[path.length - 1].x, y: startStop.y > endStop.y ?  startStop.y - i : startStop.y + i
         })
-        if(cellsTraversed !== 0){
-          pathTraversed.push({
-            x: xDifference ? path[path.length - 1].x : coordinates[0].x , y: yExceptions.includes(coordinates[0].name) ? coordinates[0].y + i : coordinates[1].y - i
-          })
-          cellsTraversed--;
-        }
+        cellsTraversed --;
       }
     }
-
     this.setState({
       path,
       pathTraversed,
@@ -123,16 +114,16 @@ class Board extends Component {
               cell_size={CELL_SIZE}
             />
           ))}
-          {path.map(point => (
+          {path.map((point, i) => (
               <Path x={point.x} y={point.y}
-                key={`${point.x}, ${point.y}`}
+                key={`points, ${point.x}, ${point.y}, ${i}`}
                 cell_size={CELL_SIZE}
               />
             ))
           }
           {pathTraversed.map(cells => (
             <CurrentCell x={cells.x} y={cells.y}
-            key={`cells, ${cells.x}, ${cells.y}`}
+            key={`pathTraveresed, ${cells.x}, ${cells.y}`}
             cell_size={CELL_SIZE}
           />
           )) 
