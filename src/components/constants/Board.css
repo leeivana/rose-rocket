@@ -13,8 +13,8 @@
   /* justify-content: space-evenly; */
   /* align-items: flex-start; */
   display: flex;
-    align-items: center;
-    font-size: 1vh;
+  align-items: center;
+  font-size: 1vh;
 }
 /* 
 .Cell::after{

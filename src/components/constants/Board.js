@@ -16,7 +16,7 @@ class Board extends Component {
   state = {
     stops: [],
     path: [],
-    cellCount: '',
+    currentCell: '',
   }
 
   componentDidMount = () => {
@@ -31,7 +31,7 @@ class Board extends Component {
       legs: legs.legData.legData, 
       stops: stops.stopData.stopData,
       activeLegID: driver.driverData.driverData[0].activeLegID,
-      legProgress: driver.driverData.driverData[0].legProgress,
+      legProgress: parseInt(driver.driverData.driverData[0].legProgress)/100,
       fetching: false,
     }))
     .then(() => {
@@ -69,10 +69,18 @@ class Board extends Component {
         })
       }
     }
-
+    this.calculateProgress((xDifference + yDifference), path);
     this.setState({
       path,
     })
+  }
+
+  calculateProgress = (totalCellCount, arrayOfPoints) => {
+    const currentCellNum = Math.floor(totalCellCount * this.state.legProgress);
+    this.setState({
+      currentCell: arrayOfPoints[currentCellNum - 1],
+    })
+    console.log(this.state.currentCell);
   }
 
   makeEmptyBoard = () => {
