@@ -14,4 +14,4 @@ class CurrentCell extends Component {
   }
 }
 
-export default CurrentCell;
+export default CurrentCell; 

@@ -15,49 +15,35 @@ class Board extends Component {
     this.board = this.makeEmptyBoard();
   }
   state = {
-    stops: [],
     path: [],
     pathTraversed: [],
   }
 
   componentDidMount = () => {
-    this.setState({fetching: true});
-    Promise.all([
-      fetch('http://localhost:3000/legs'),
-      fetch('http://localhost:3000/stops'),
-      fetch('http://localhost:3000/driver')
-    ])
-    .then(([res1, res2, res3]) => Promise.all([res1.json(), res2.json(), res3.json()]))
-    .then(([legs, stops, driver]) => this.setState({
-      legs: legs.legData.legData, 
-      stops: stops.stopData.stopData,
-      activeLegID: driver.driverData.driverData[0].activeLegID,
-      legProgress: parseInt(driver.driverData.driverData[0].legProgress)/100,
-      fetching: false,
-    }))
-    .then(() => {
-      this.calculatePath("KL");
-    })
-    .catch(err => console.warn('Error:', err));
+    if(!this.props.fetching && this.props.legID){
+      // this.calculatePath(this.props.legID);
+      this.calculatePath(this.props.legID)
+    }
   }
 
   calculatePath = (legID) => {
+    console.log('enter');
     const stops = legID.split('');
-    const path = this.state.stops.filter((stop) => {
+    const coordinates = this.props.stops.filter((stop) => {
       return stop.name === stops[0] || stop.name === stops[1]
     });
-    const xDifference = Math.abs(path[0].x - path[1].x)
-    const yDifference = Math.abs(path[0].y - path[1].y);
-    this.setPaths(path, xDifference, yDifference);
+    const xDifference = Math.abs(coordinates[0].x - coordinates[1].x)
+    const yDifference = Math.abs(coordinates[0].y - coordinates[1].y);
+    this.setPaths(coordinates, xDifference, yDifference);
   }
 
-  setPaths = (path, xDifference, yDifference) => {
+  setPaths = (coordinates, xDifference, yDifference) => {
     const pathTraversed = [];
-    const startStop = path[0];
-    const endStop = path[1];
-    let cellsTraversed = Math.ceil((xDifference + yDifference) * this.state.legProgress);
+    const startStop = coordinates[0];
+    const endStop = coordinates[1];
+    let cellsTraversed = Math.ceil((xDifference + yDifference) * this.props.legProgress);
     for(let i = 0; i <= xDifference; i++) {
-      path.push({
+      coordinates.push({
         x: startStop.x > endStop.x ? startStop.x - i : startStop.x + i , y: startStop.y
       })
       if(cellsTraversed !== 0) {
@@ -68,18 +54,18 @@ class Board extends Component {
       }
     }
     for(let i = 0; i <= yDifference; i++) {
-      path.push({
-        x: path[path.length - 1].x, y: startStop.y > endStop.y ?  startStop.y - i : startStop.y + i
+      coordinates.push({
+        x: coordinates[coordinates.length - 1].x, y: startStop.y > endStop.y ?  startStop.y - i : startStop.y + i
       })
       if(cellsTraversed !== 0){
         pathTraversed.push({
-          x: path[path.length - 1].x, y: startStop.y > endStop.y ?  startStop.y - i : startStop.y + i
+          x: coordinates[coordinates.length - 1].x, y: startStop.y > endStop.y ?  startStop.y - i : startStop.y + i
         })
         cellsTraversed --;
       }
     }
     this.setState({
-      path,
+      path: coordinates,
       pathTraversed,
     })
   }
@@ -96,11 +82,9 @@ class Board extends Component {
   }
 
   render() {
-    const { stops, fetching, path, pathTraversed } = this.state;
+    const { path, pathTraversed } = this.state;
+    const { stops } = this.props;
     return (
-      fetching ? 
-      <div>LOADING...</div>
-      :
       <div>
         <div className="Board"
           style={{ width: WIDTH, height: HEIGHT,
@@ -109,21 +93,21 @@ class Board extends Component {
         >
           {stops.map(stop => (
             <Stops x={stop.x} y={stop.y}
-              key={stop.name}
+              key={`${stop.name}, ${stop.x}, ${stop.y}`}
               stopName={stop.name}
               cell_size={CELL_SIZE}
             />
           ))}
           {path.map((point, i) => (
               <Path x={point.x} y={point.y}
-                key={`points, ${point.x}, ${point.y}, ${i}`}
+                key={`path, ${point.x}, ${point.y}, ${i}`}
                 cell_size={CELL_SIZE}
               />
             ))
           }
-          {pathTraversed.map(cells => (
+          {pathTraversed.map((cells, i) => (
             <CurrentCell x={cells.x} y={cells.y}
-            key={`pathTraveresed, ${cells.x}, ${cells.y}`}
+            key={`cells, ${cells.x}, ${cells.y}, ${i}`}
             cell_size={CELL_SIZE}
           />
           )) 
