@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-class Selector extends React.Component {
+class Selector extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,16 +19,18 @@ class Selector extends React.Component {
     this.setState({
       value: event.target.value, 
     })
+    console.log(this.state.value);
   }
 
   render() {
     const { items } = this.props;
     return (
-      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} onChange={this.handleChange}>
+      <div className="selector-container">
+      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle caret>
           Select Leg ID
         </DropdownToggle>
-        <DropdownMenu>
+        <DropdownMenu value={this.state.value} onChange={this.handleChange}>
           {items.map(item => (
             <DropdownItem key={item} value={item}>
               {item}
@@ -36,6 +38,11 @@ class Selector extends React.Component {
           ))}
         </DropdownMenu>
       </Dropdown>
+      {this.state.value &&
+      <p>Selected Id {this.state.value}</p>
+      }
+      <input type="text" placeholder="Enter leg percentage"></input>
+      </div>
     );
   }
 }

@@ -21,13 +21,11 @@ class Board extends Component {
 
   componentDidMount = () => {
     if(!this.props.fetching && this.props.legID){
-      // this.calculatePath(this.props.legID);
       this.calculatePath(this.props.legID)
     }
   }
 
   calculatePath = (legID) => {
-    console.log('enter');
     const stops = legID.split('');
     const coordinates = this.props.stops.filter((stop) => {
       return stop.name === stops[0] || stop.name === stops[1]
