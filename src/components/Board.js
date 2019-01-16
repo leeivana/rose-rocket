@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Cell from './Cell';
+import Stops from './Stops';
 import Path from './Path';
+import CurrentCell from './CurrentCell';
 import './Board.css';
 
 const CELL_SIZE = window.innerHeight/105;
@@ -16,7 +17,7 @@ class Board extends Component {
   state = {
     stops: [],
     path: [],
-    currentCell: '',
+    pathTraversed: [],
   }
 
   componentDidMount = () => {
@@ -47,18 +48,28 @@ class Board extends Component {
     });
     const xDifference = Math.abs(coordinates[0].x - coordinates[1].x)
     const yDifference = Math.abs(coordinates[0].y - coordinates[1].y);
-    this.setPath(coordinates, xDifference, yDifference);
+    this.setPaths(coordinates, xDifference, yDifference, stops[0], stops[1]);
   }
 
-  setPath = (coordinates, xDifference, yDifference) => {
+  setPaths = (coordinates, xDifference, yDifference, startStop, endStop) => {
+    console.log(coordinates);
     const path = [];
+    const pathTraversed = [];
+    const yExceptions = ['A', 'B', 'C', 'D', 'E'];
+    const xExceptions = ['H', 'I', 'J', 'K', 'L'];
+    let cellsTraversed = Math.ceil((xDifference + yDifference) * this.state.legProgress);
     if(xDifference){
-    // sort array from lowest to highest based on y position
-    coordinates.sort((a, b) =>  a.x - b.x);
       for(let i = 1; i <= xDifference; i++) {
         path.push({
-          x: coordinates[0].x + i, y: coordinates[0].y,
+          x: xExceptions.includes(coordinates[0].name) ? coordinates[0].x - i : coordinates[0].x + i, y: coordinates[0].y,
         })
+        console.log('path', path);
+        if(cellsTraversed !== 0){
+          pathTraversed.push({
+            x: xExceptions.includes(coordinates[0].name) ? coordinates[0].x - i : coordinates[0].x + i, y: coordinates[0].y,
+          })
+          cellsTraversed--;
+        }
       }
     }
     if(yDifference){
@@ -67,20 +78,19 @@ class Board extends Component {
         path.push({
           x: xDifference ? path[path.length - 1].x : coordinates[0].x , y: coordinates[0].y + i
         })
+        if(cellsTraversed !== 0){
+          pathTraversed.push({
+            x: xDifference ? path[path.length - 1].x : coordinates[0].x , y: yExceptions.includes(coordinates[0].name) ? coordinates[0].y + i : coordinates[1].y - i
+          })
+          cellsTraversed--;
+        }
       }
     }
-    this.calculateProgress((xDifference + yDifference), path);
+
     this.setState({
       path,
+      pathTraversed,
     })
-  }
-
-  calculateProgress = (totalCellCount, arrayOfPoints) => {
-    const currentCellNum = Math.floor(totalCellCount * this.state.legProgress);
-    this.setState({
-      currentCell: arrayOfPoints[currentCellNum - 1],
-    })
-    console.log(this.state.currentCell);
   }
 
   makeEmptyBoard = () => {
@@ -95,7 +105,7 @@ class Board extends Component {
   }
 
   render() {
-    const { stops, fetching, path } = this.state;
+    const { stops, fetching, path, pathTraversed } = this.state;
     return (
       fetching ? 
       <div>LOADING...</div>
@@ -107,7 +117,7 @@ class Board extends Component {
           ref={(n) => { this.boardRef = n; }}
         >
           {stops.map(stop => (
-            <Cell x={stop.x} y={stop.y}
+            <Stops x={stop.x} y={stop.y}
               key={stop.name}
               stopName={stop.name}
               cell_size={CELL_SIZE}
@@ -119,6 +129,13 @@ class Board extends Component {
                 cell_size={CELL_SIZE}
               />
             ))
+          }
+          {pathTraversed.map(cells => (
+            <CurrentCell x={cells.x} y={cells.y}
+            key={`cells, ${cells.x}, ${cells.y}`}
+            cell_size={CELL_SIZE}
+          />
+          )) 
           }
         </div>
       </div>

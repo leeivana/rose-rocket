@@ -1,0 +1,32 @@
+.Board {
+  position: relative;
+  background-color: #fff;
+  background-image:
+    linear-gradient(#b8b6b6 1px, transparent 1px),
+    linear-gradient(90deg, #b8b6b6 1px, transparent 1px);
+}
+
+.Cell {
+  background: #fff;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  font-size: 1vh;
+  z-index: 1;
+}
+
+.Path {
+  background: blue;
+  position: absolute;
+  display: inline-flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.CurrentCell {
+  background: red;
+  position: absolute;
+  display: inline-flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}

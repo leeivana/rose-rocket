@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; 
-import Board from './constants/Board';
+import Board from './Board';
 class MainPage extends Component {
   render(){
     return(
