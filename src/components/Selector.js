@@ -20,7 +20,10 @@ class Selector extends Component {
   }
 
   handleSubmit = (event) => {
-    this.props.updateInfo(this.state.legID, this.state.percentage);
+    if(!this.state.percentage) {
+      this.props.updateInfo(this.state.legID, 0);
+    }
+    this.props.updateInfo(this.state.legID, (this.state.percentage / 100));
     event.preventDefault();
   }
 
@@ -41,7 +44,7 @@ class Selector extends Component {
           <input 
             type="text" 
             value={this.state.percentage} 
-            placeholder="&nbsp;" 
+            placeholder="Enter leg progress %" 
             onChange={this.handleInputChange}
             id="inp"
           />

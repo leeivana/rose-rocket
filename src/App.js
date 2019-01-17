@@ -37,10 +37,9 @@ class App extends Component {
   }
 
   updateInfo = (activeLegID, legProgress) => {
-    console.log('activeLegID', activeLegID);
-    console.log('legProgress', legProgress);
     this.setState(previousState => ({
       activeLegID,
+      legProgress,
       previousLegID: previousState.activeLegID,
     }))
   }

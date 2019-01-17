@@ -25,8 +25,8 @@ class Board extends Component {
     }
   }
 
-  componentDidUpdate = (prevProps, prevState, snapshot) => {
-    if (this.props.legID !== prevProps.legID) {
+  componentDidUpdate = (prevProps) => {
+    if (this.props.legID !== prevProps.legID || this.props.legProgress !== prevProps.legProgress) {
       this.calculatePath(this.props.legID)
     }
   }
@@ -89,9 +89,7 @@ class Board extends Component {
   render() {
     const { path, pathTraversed } = this.state;
     const { stops } = this.props;
-    // if(!this.props.fetching && this.props.legID){
-    //   this.calculatePath(this.props.legID)
-    // }
+
     return (
       <div>
         <div className="Board"
