@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; 
+import './Selector.css';
 class Selector extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +20,7 @@ class Selector extends Component {
   }
 
   handleSubmit = (event) => {
-    console.log('submitted');
+    this.props.updateInfo(this.state.legID, this.state.percentage);
     event.preventDefault();
   }
 
@@ -27,7 +28,7 @@ class Selector extends Component {
     const { items } = this.props;
     return (
       <div className="selector-container">
-        <form onSubmit={this.handleSubmit}>
+        <form className="form-group" onSubmit={this.handleSubmit}>
           <select value={this.state.legID} onChange={this.handleChange}>
             {items.map(item => (
               <option key={item} value={item}>{item}</option>
@@ -36,12 +37,15 @@ class Selector extends Component {
           {this.state.value &&
             <p>Selected Id {this.state.value}</p>
           }
+          <label htmlFor="inp" className="inp">
           <input 
             type="text" 
             value={this.state.percentage} 
-            placeholder="Enter leg percentage" 
+            placeholder="&nbsp;" 
             onChange={this.handleInputChange}
+            id="inp"
           />
+          </label>
           <input type="submit" value="Submit" />
         </form>
       </div>

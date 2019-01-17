@@ -19,12 +19,18 @@ class Board extends Component {
     }
   }
 
-
   componentDidMount = () => {
     if(!this.props.fetching && this.props.legID){
       this.calculatePath(this.props.legID)
     }
   }
+
+  componentDidUpdate = (prevProps, prevState, snapshot) => {
+    if (this.props.legID !== prevProps.legID) {
+      this.calculatePath(this.props.legID)
+    }
+  }
+
 
   calculatePath = (legID) => {
     const stops = legID.split('');
@@ -83,34 +89,37 @@ class Board extends Component {
   render() {
     const { path, pathTraversed } = this.state;
     const { stops } = this.props;
+    // if(!this.props.fetching && this.props.legID){
+    //   this.calculatePath(this.props.legID)
+    // }
     return (
       <div>
         <div className="Board"
           style={{ width: WIDTH, height: HEIGHT,
             backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}}
           ref={(n) => { this.boardRef = n; }}
+          
         >
-          {stops.map(stop => (
-            <Stops x={stop.x} y={stop.y}
-              key={`${stop.name}, ${stop.x}, ${stop.y}`}
-              stopName={stop.name}
+        {stops.map(stop => (
+          <Stops x={stop.x} y={stop.y}
+            key={`${stop.name}, ${stop.x}, ${stop.y}`}
+            stopName={stop.name}
+            cell_size={CELL_SIZE}
+          />
+        ))}
+        {path.map((point, i) => (
+            <Path x={point.x} y={point.y}
+              key={`path, ${point.x}, ${point.y}, ${i}`}
               cell_size={CELL_SIZE}
             />
-          ))}
-          {path.map((point, i) => (
-              <Path x={point.x} y={point.y}
-                key={`path, ${point.x}, ${point.y}, ${i}`}
-                cell_size={CELL_SIZE}
-              />
-            ))
-          }
-          {pathTraversed.map((cells, i) => (
-            <CurrentCell x={cells.x} y={cells.y}
+          ))
+        }
+        {pathTraversed.map((cells, i) => (
+          <CurrentCell x={cells.x} y={cells.y}
             key={`cells, ${cells.x}, ${cells.y}, ${i}`}
             cell_size={CELL_SIZE}
           />
-          )) 
-          }
+        ))}
         </div>
       </div>
     );

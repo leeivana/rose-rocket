@@ -9,6 +9,7 @@ class App extends Component {
       stops: [],
       legs: [],
       activeLegID: '',
+      previousLegID: '',
       legProgress: '',
     }
   }
@@ -30,13 +31,27 @@ class App extends Component {
     .catch(err => console.warn('Error:', err));
   }
 
+  shouldComponentUpdate = () => {
+    console.log('hi');
+    return true;
+  }
+
+  updateInfo = (activeLegID, legProgress) => {
+    console.log('activeLegID', activeLegID);
+    console.log('legProgress', legProgress);
+    this.setState(previousState => ({
+      activeLegID,
+      previousLegID: previousState.activeLegID,
+    }))
+  }
+
   render() {
     const { stops, fetching, activeLegID, legProgress, legs } = this.state;
     return (
       fetching ? 
       <div>LOADING</div>
       :
-      <div className="App">
+      <div style={{display: 'flex'}}>
         <Board 
           stops={stops}
           legID={activeLegID}
@@ -48,6 +63,7 @@ class App extends Component {
             items={legs.map(leg => (leg.legID))}
             currentId={activeLegID}
             currentPercentage={legProgress}
+            updateInfo={this.updateInfo}
           />
         }
 
