@@ -1,47 +1,40 @@
 import React, { Component } from 'react'; 
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 class Selector extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dropdownOpen: false,
-      value: '',
+      legID: this.props.currentId,
+      percentage: '',
     };
-  }
-
-  toggle = () => {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
   }
 
   handleChange = (event) => {
     this.setState({
-      value: event.target.value, 
+      legID: event.target.value, 
     })
-    console.log(this.state.value);
+  }
+
+  handleInputChange = (event) => {
+    this.setState({percentage: event.target.value})
   }
 
   render() {
     const { items } = this.props;
     return (
       <div className="selector-container">
-      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-        <DropdownToggle caret>
-          Select Leg ID
-        </DropdownToggle>
-        <DropdownMenu value={this.state.value} onChange={this.handleChange}>
-          {items.map(item => (
-            <DropdownItem key={item} value={item}>
-              {item}
-            </DropdownItem>
-          ))}
-        </DropdownMenu>
-      </Dropdown>
+      <select value={this.state.legID} onChange={this.handleChange}>
+        {items.map(item => (
+          <option key={item} value={item}>{item}</option>
+        ))}
+      </select>
       {this.state.value &&
-      <p>Selected Id {this.state.value}</p>
+        <p>Selected Id {this.state.value}</p>
       }
-      <input type="text" placeholder="Enter leg percentage"></input>
+      <input 
+        type="text" 
+        value={this.state.percentage} 
+        placeholder="Enter leg percentage" 
+        onChange={this.handleInputChange}/>
       </div>
     );
   }

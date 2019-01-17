@@ -46,6 +46,8 @@ class App extends Component {
         {legs && 
           <Selector 
             items={legs.map(leg => (leg.legID))}
+            currentId={activeLegID}
+            currentPercentage={legProgress}
           />
         }
 

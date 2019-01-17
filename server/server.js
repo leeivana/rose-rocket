@@ -1,8 +1,7 @@
 const fastify = require('fastify')({
   logger: true
-})
-const cors = require('cors')
-
+});
+const cors = require('cors');
 fastify.register(require('../src/routes'))
 fastify.use(cors())
 fastify.listen(3000, function (err, address) {

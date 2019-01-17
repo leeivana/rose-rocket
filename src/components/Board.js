@@ -13,11 +13,12 @@ class Board extends Component {
     this.rows = HEIGHT / CELL_SIZE;
     this.cols = WIDTH / CELL_SIZE;
     this.board = this.makeEmptyBoard();
+    this.state = {
+      path: [],
+      pathTraversed: [],
+    }
   }
-  state = {
-    path: [],
-    pathTraversed: [],
-  }
+
 
   componentDidMount = () => {
     if(!this.props.fetching && this.props.legID){
