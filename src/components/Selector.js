@@ -18,23 +18,32 @@ class Selector extends Component {
     this.setState({percentage: event.target.value})
   }
 
+  handleSubmit = (event) => {
+    console.log('submitted');
+    event.preventDefault();
+  }
+
   render() {
     const { items } = this.props;
     return (
       <div className="selector-container">
-      <select value={this.state.legID} onChange={this.handleChange}>
-        {items.map(item => (
-          <option key={item} value={item}>{item}</option>
-        ))}
-      </select>
-      {this.state.value &&
-        <p>Selected Id {this.state.value}</p>
-      }
-      <input 
-        type="text" 
-        value={this.state.percentage} 
-        placeholder="Enter leg percentage" 
-        onChange={this.handleInputChange}/>
+        <form onSubmit={this.handleSubmit}>
+          <select value={this.state.legID} onChange={this.handleChange}>
+            {items.map(item => (
+              <option key={item} value={item}>{item}</option>
+            ))}
+          </select>
+          {this.state.value &&
+            <p>Selected Id {this.state.value}</p>
+          }
+          <input 
+            type="text" 
+            value={this.state.percentage} 
+            placeholder="Enter leg percentage" 
+            onChange={this.handleInputChange}
+          />
+          <input type="submit" value="Submit" />
+        </form>
       </div>
     );
   }
