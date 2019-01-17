@@ -31,7 +31,6 @@ class Board extends Component {
     }
   }
 
-
   calculatePath = (legID) => {
     const stops = legID.split('');
     const coordinates = this.props.stops.filter((stop) => {
@@ -46,7 +45,7 @@ class Board extends Component {
     const pathTraversed = [];
     const startStop = coordinates[0];
     const endStop = coordinates[1];
-    let cellsTraversed = Math.ceil((xDifference + yDifference) * this.props.legProgress);
+    let cellsTraversed = Math.ceil((xDifference + yDifference + 1) * this.props.legProgress);
     for(let i = 0; i <= xDifference; i++) {
       coordinates.push({
         x: startStop.x > endStop.x ? startStop.x - i : startStop.x + i , y: startStop.y
@@ -55,7 +54,7 @@ class Board extends Component {
         pathTraversed.push({
           x: startStop.x > endStop.x ? startStop.x - i : startStop.x + i, y: startStop.y
         })
-        cellsTraversed--;
+        cellsTraversed --;
       }
     }
     for(let i = 0; i <= yDifference; i++) {
