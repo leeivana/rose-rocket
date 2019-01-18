@@ -12,8 +12,21 @@ class App extends Component {
       previousLegID: '',
       legProgress: '',
     }
+    this.socket = new WebSocket("ws://localhost:3000");
   }
   componentDidMount = () => {
+    this.socket.addEventListener("open", event => {
+    });
+    this.socket.onmessage = this.incoming = event => { 
+      const payload = JSON.parse(event.data);
+      const { activeLegID, legProgress, previousLegID } = payload; 
+      this.setState({
+        activeLegID,
+        legProgress,
+        previousLegID,
+      })
+    }
+    // this.socket.onopen = () => this.socket.send('hello');
     this.setState({fetching: true});
     Promise.all([
       fetch('http://localhost:3000/legs'),
@@ -28,20 +41,19 @@ class App extends Component {
       legProgress: parseInt(driver.driverData.driverData[0].legProgress)/100,
       fetching: false,
     }))
-    .catch(err => console.warn('Error:', err));
-  }
-
-  shouldComponentUpdate = () => {
-    console.log('hi');
-    return true;
+    .catch(err => console.warn('Error:', err));    
   }
 
   updateInfo = (activeLegID, legProgress) => {
     this.setState(previousState => ({
-      activeLegID,
-      legProgress,
       previousLegID: previousState.activeLegID,
     }))
+    this.socket.send(JSON.stringify({
+      type: 'newCoordinates', 
+      activeLegID, 
+      legProgress,
+      previousLegID: this.state.previousLegID
+    }));
   }
 
   render() {
