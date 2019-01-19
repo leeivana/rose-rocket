@@ -1,0 +1,55 @@
+.form-group {
+  position: relative;
+  padding: 1.5rem;
+  text-transform: uppercase;
+  .label-style {
+    font-weight: 700;
+    font-size: 3vh;
+  }
+  .selector-container {
+    border: 1px solid #ccc;
+    width: 120px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 10px 0 20px 0;
+    select {
+      padding: 5px 8px;
+      width: 130%;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+      background-image: none;
+      -webkit-appearance: none;
+    }
+    option {
+      margin: auto;
+    }
+    select:focus {
+      outline: none;
+    }
+  }
+}
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.3.2/css/simple-line-icons.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:300,700');
+
+body {
+    width: 100%;
+    min-height: 900px;
+    margin: 3em auto;
+    background-color: #f2f1ef !important;
+    letter-spacing: 1px;
+}
+
+.select {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  margin: auto;
+  width: 330px;
+  height: 100%;
+  border-bottom: 0px;
+  border-radius: 3px;
+  font-size: 12px;
+}

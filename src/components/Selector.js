@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; 
-import './Selector.css';
+import './Selector.scss';
 class Selector extends Component {
   constructor(props) {
     super(props);
@@ -30,13 +30,17 @@ class Selector extends Component {
   render() {
     const { items } = this.props;
     return (
-      <div className="selector-container">
+      <div className="select animated zoomIn">
         <form className="form-group" onSubmit={this.handleSubmit}>
-          <select value={this.state.legID} onChange={this.handleChange}>
-            {items.map(item => (
-              <option key={item} value={item}>{item}</option>
-            ))}
-          </select>
+        <div className="label-style">Leg ID: </div>
+          <div className="selector-container">
+            <select value={this.state.legID} onChange={this.handleChange}>
+              {items.map(item => (
+                <option key={item} value={item}>{item}</option>
+              ))}
+            </select>
+          </div>
+
           {this.state.value &&
             <p>Selected Id {this.state.value}</p>
           }
