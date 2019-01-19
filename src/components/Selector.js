@@ -1,4 +1,7 @@
 import React, { Component } from 'react'; 
+import { Button } from 'reactstrap';
+import { Form, FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap';
+
 import './Selector.scss';
 class Selector extends Component {
   constructor(props) {
@@ -44,16 +47,16 @@ class Selector extends Component {
           {this.state.value &&
             <p>Selected Id {this.state.value}</p>
           }
-          <label htmlFor="inp" className="inp">
-          <input 
-            type="number" 
+          <Label for="examplePassword">Leg Progress: </Label>
+          <Input
             value={this.state.percentage} 
-            placeholder="Enter leg progress %" 
             onChange={this.handleInputChange}
             id="inp"
+            pattern="^(?:100|[1-9]?[0-9])$"
           />
-          </label>
-          <input type="submit" value="Submit" />
+          <FormFeedback>Oh noes! that name is already taken</FormFeedback>
+          <FormText>Enter a number between 1-100</FormText>
+          <Button type="submit" value="Submit" outline color="secondary">Submit</Button>{' '}
         </form>
       </div>
     );
