@@ -68,7 +68,7 @@ class App extends Component {
           legProgress={legProgress}
           fetching={fetching}
         />
-        <Legend style={{margin: 'auto'}}/>
+        <Legend />
         {legs && 
           <Selector 
             items={legs.map(leg => (leg.legID))}

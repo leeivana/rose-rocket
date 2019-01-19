@@ -12,13 +12,23 @@ body {
   .select {
     position: relative;
     overflow: hidden;
-    display: block;
-    margin: auto;
+    margin: auto !important;
     width: 330px;
     height: 100%;
     border-bottom: 0px;
     border-radius: 3px;
     font-size: 12px;
+    input {
+      border: 1px #d2d7d3 solid;
+    }
+    button:focus, input:focus{
+      outline-style:none;
+      box-shadow:none;
+      border: 1px #d2d7d3 solid;
+    }
+    .form-text{
+      padding-bottom: 20px;
+    }
     .form-group {
       position: relative;
       padding: 1.5rem;
@@ -61,7 +71,3 @@ body {
 
 
 
-
-.form-text{
-  padding-bottom: 20px;
-}
