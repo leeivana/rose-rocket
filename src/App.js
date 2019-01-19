@@ -26,7 +26,6 @@ class App extends Component {
         previousLegID,
       })
     }
-    // this.socket.onopen = () => this.socket.send('hello');
     this.setState({fetching: true});
     Promise.all([
       fetch('http://localhost:3000/legs'),
@@ -49,7 +48,6 @@ class App extends Component {
       previousLegID: previousState.activeLegID,
     }))
     this.socket.send(JSON.stringify({
-      type: 'newCoordinates', 
       activeLegID, 
       legProgress,
       previousLegID: this.state.previousLegID
