@@ -46,7 +46,7 @@ class Selector extends Component {
           }
           <label htmlFor="inp" className="inp">
           <input 
-            type="text" 
+            type="number" 
             value={this.state.percentage} 
             placeholder="Enter leg progress %" 
             onChange={this.handleInputChange}

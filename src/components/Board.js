@@ -46,7 +46,7 @@ class Board extends Component {
     const startStop = coordinates[0];
     const endStop = coordinates[1];
     let cellsTraversed = Math.ceil((xDifference + yDifference) * this.props.legProgress);
-    for(let i = 0; i < xDifference; i++) {
+    for(let i = 1; i <= xDifference; i++) {
       coordinates.push({
         x: startStop.x > endStop.x ? startStop.x - i : startStop.x + i , y: startStop.y
       })
@@ -57,7 +57,7 @@ class Board extends Component {
         cellsTraversed --;
       }
     }
-    for(let i = 0; i < yDifference; i++) {
+    for(let i = 1; i < yDifference; i++) {
       coordinates.push({
         x: coordinates[coordinates.length - 1].x, y: startStop.y > endStop.y ?  startStop.y - i : startStop.y + i
       })
