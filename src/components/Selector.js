@@ -35,7 +35,7 @@ class Selector extends Component {
     return (
       <div className="select animated zoomIn">
         <form className="form-group" onSubmit={this.handleSubmit}>
-        <div className="label-style">Leg ID: </div>
+        <Label>Leg ID: </Label>
           <div className="selector-container">
             <select value={this.state.legID} onChange={this.handleChange}>
               {items.map(item => (
@@ -47,7 +47,7 @@ class Selector extends Component {
           {this.state.value &&
             <p>Selected Id {this.state.value}</p>
           }
-          <Label for="examplePassword">Leg Progress: </Label>
+          <Label for="inp">Leg Progress: </Label>
           <Input
             value={this.state.percentage} 
             onChange={this.handleInputChange}
