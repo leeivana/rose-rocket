@@ -18,6 +18,12 @@ body {
     border-bottom: 0px;
     border-radius: 3px;
     font-size: 12px;
+    .info-container{
+      margin-top: 20px;
+      p{
+        margin: 0;
+      }
+    }
     input {
       border: 1px #d2d7d3 solid;
     }
