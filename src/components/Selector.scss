@@ -8,6 +8,7 @@ body {
   margin: 3em auto;
   background-color: #f2f1ef !important;
   letter-spacing: 1px;
+  margin: auto;
   .select {
     position: relative;
     overflow: hidden;
@@ -18,9 +19,6 @@ body {
     border-bottom: 0px;
     border-radius: 3px;
     font-size: 12px;
-    input[type=number]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-    }
     .form-group {
       position: relative;
       padding: 1.5rem;
