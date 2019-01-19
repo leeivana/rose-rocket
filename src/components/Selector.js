@@ -1,5 +1,8 @@
 import React, { Component } from 'react'; 
-import './Selector.css';
+import { Button } from 'reactstrap';
+import { Form, FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap';
+
+import './Selector.scss';
 class Selector extends Component {
   constructor(props) {
     super(props);
@@ -30,26 +33,40 @@ class Selector extends Component {
   render() {
     const { items } = this.props;
     return (
-      <div className="selector-container">
+      <div className="select animated zoomIn">
         <form className="form-group" onSubmit={this.handleSubmit}>
-          <select value={this.state.legID} onChange={this.handleChange}>
-            {items.map(item => (
-              <option key={item} value={item}>{item}</option>
-            ))}
-          </select>
+        <Label>Leg ID: </Label>
+          <div className="selector-container">
+            <select value={this.state.legID} onChange={this.handleChange}>
+              {items.map(item => (
+                <option key={item} value={item}>{item}</option>
+              ))}
+            </select>
+          </div>
+
           {this.state.value &&
             <p>Selected Id {this.state.value}</p>
           }
-          <label htmlFor="inp" className="inp">
-          <input 
-            type="text" 
+          <Label for="inp">Leg Progress: </Label>
+          <Input
             value={this.state.percentage} 
-            placeholder="Enter leg progress %" 
             onChange={this.handleInputChange}
             id="inp"
+            pattern="^(?:100|[1-9]?[0-9])$"
           />
-          </label>
-          <input type="submit" value="Submit" />
+          <FormFeedback>Oh noes! that name is already taken</FormFeedback>
+          <FormText>Enter a number between 1-100</FormText>
+          <Button type="submit" value="Submit" outline color="secondary">Submit</Button>{' '}
+          <div className="info-container">
+              <p>Displayed ID: '{this.state.legID}'</p>
+              <p>Leg Percentage:
+              {this.state.percentage ? 
+                <span> {this.state.percentage}%</span>
+                : 
+                <span> 0%</span>
+              }
+            </p>
+          </div>
         </form>
       </div>
     );

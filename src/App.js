@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import Board from './components/Board';
 import Selector from './components/Selector';
+import Legend from './components/Legend';
 class App extends Component {
   constructor(){
     super();
@@ -67,6 +68,7 @@ class App extends Component {
           legProgress={legProgress}
           fetching={fetching}
         />
+        <Legend />
         {legs && 
           <Selector 
             items={legs.map(leg => (leg.legID))}
@@ -75,7 +77,6 @@ class App extends Component {
             updateInfo={this.updateInfo}
           />
         }
-
       </div>
     );
   }
