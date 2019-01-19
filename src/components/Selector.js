@@ -58,7 +58,7 @@ class Selector extends Component {
           <FormText>Enter a number between 1-100</FormText>
           <Button type="submit" value="Submit" outline color="secondary">Submit</Button>{' '}
           <div className="info-container">
-              <p>Displayed ID: '{this.state.legID}'</p>
+              <p>Selected ID: '{this.state.legID}'</p>
               <p>Leg Percentage:
               {this.state.percentage ? 
                 <span> {this.state.percentage}%</span>
