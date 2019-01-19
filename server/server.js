@@ -13,9 +13,6 @@ fastify.ready(err => {
     console.log('Connection Established!!!')
     socket.on('message', event => {
       const data = JSON.parse(event); 
-      socket.send(JSON.stringify({...data}));
-      // console.log('socket', socket);
-      // console.log('ws', fastify.ws.clients);
       fastify.ws.clients.forEach(function each(client) {
         client.send(JSON.stringify({...data}));
       });
