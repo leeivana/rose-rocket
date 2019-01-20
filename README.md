@@ -13,13 +13,13 @@ Install dependencies using npm install
 
 Start the server
 
-*Make sure that the server runs on port 3000*
-
 ```
 cd server
 Start the server using node server
 ```
 Start client using `npm start` in the main directory.
+
+*Server should run on port 3001 and server should run on port 3000*
 
 ### Screenshots
 !["Screenshot of Application"](https://github.com/leeivana/rose-rocket/blob/master/docs/Screenshot.png?raw=true)
