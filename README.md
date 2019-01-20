@@ -21,10 +21,17 @@ Start client using `npm start` in the main directory.
 ### Dependencies 
 * React
 * React-DOM
-* Cors
-* Reactstrap
-* 
+* cors
+* reactstrap
+* bootstrap
+* fastify
+* fastify-ws 
 
 ### devDependencies 
-* node-sass
-* 
+* node-sass: ^4.11.0
+* babel-core: ^7.1.6
+* babel-loader: ^8.0.4
+* babel-preset-react: ^7.0.0
+* eslint: ^5.6.0
+* eslint-plugin-react: ^7.11.1
+
