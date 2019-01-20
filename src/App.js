@@ -48,11 +48,18 @@ class App extends Component {
     this.setState(previousState => ({
       previousLegID: previousState.activeLegID,
     }))
-    this.socket.send(JSON.stringify({
-      activeLegID, 
-      legProgress,
-      previousLegID: this.state.previousLegID
-    }));
+    fetch('http://localhost:3000/driver', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({activeLegID, legProgress: legProgress * 100})
+    })
+    .then(
+      this.socket.send(JSON.stringify({
+        activeLegID, 
+        legProgress,
+        previousLegID: this.state.previousLegID
+      }))
+    )
   }
 
   render() {

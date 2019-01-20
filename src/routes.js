@@ -18,6 +18,11 @@ async function routes (fastify, options) {
   fastify.get('/driver', async(request, reply) => {
     return { driverData }
   })
+  fastify.put('/driver', async(request, reply) => {
+    driverData.driverData[0] = request.body;
+    reply.status(200);
+    reply.send('Driver information updated');
+  })
 }
 
 module.exports = routes;

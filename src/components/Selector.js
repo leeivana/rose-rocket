@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import { Button } from 'reactstrap';
-import { Form, FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap';
+import { Label, Input, FormFeedback, FormText } from 'reactstrap';
 
 import './Selector.scss';
 class Selector extends Component {
@@ -39,7 +39,7 @@ class Selector extends Component {
           <div className="selector-container">
             <select value={this.state.legID} onChange={this.handleChange}>
               {items.map(item => (
-                <option key={item} value={item}>{item}</option>
+                <option key={item} name='activeLegID' value={item}>{item}</option>
               ))}
             </select>
           </div>
@@ -52,6 +52,7 @@ class Selector extends Component {
             value={this.state.percentage} 
             onChange={this.handleInputChange}
             id="inp"
+            name='legProgress'
             pattern="^(?:100|[1-9]?[0-9])$"
           />
           <FormFeedback>Oh noes! that name is already taken</FormFeedback>

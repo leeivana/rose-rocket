@@ -36,7 +36,6 @@ class Board extends Component {
     const coordinates = this.props.stops.filter((stop) => {
       return stop.name === stops[0] || stop.name === stops[1]
     });
-    console.log(coordinates);
     const xDifference = Math.abs(coordinates[0].x - coordinates[1].x)
     const yDifference = Math.abs(coordinates[0].y - coordinates[1].y);
     this.setPaths(coordinates, xDifference, yDifference);
