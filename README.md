@@ -1,6 +1,6 @@
 Rose Rocket Assignment
 =====================
-App created with ReactJS that visualizes routes and driver position given a legID and percentage progress. 
+App created with ReactJS, Fastify and Websockets helps visualize routes and driver position given a legID and percentage progress. 
 
 ### Getting Started 
 Fork and clone the respository
