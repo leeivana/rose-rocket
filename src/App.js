@@ -74,6 +74,7 @@ class App extends Component {
           legID={activeLegID}
           legProgress={legProgress}
           fetching={fetching}
+          includes={this.state.activeLegID.includes('A')}
         />
         <Legend />
         {legs && 

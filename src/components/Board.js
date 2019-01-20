@@ -87,8 +87,7 @@ class Board extends Component {
 
   render() {
     const { path, pathTraversed } = this.state;
-    const { stops } = this.props;
-
+    const { stops, includes } = this.props;
     return (
       <div>
         <div className="Board"
@@ -102,6 +101,7 @@ class Board extends Component {
             key={`${stop.name}, ${stop.x}, ${stop.y}`}
             stopName={stop.name}
             cell_size={CELL_SIZE}
+            includes={includes}
           />
         ))}
         {path.map((point, i) => (
