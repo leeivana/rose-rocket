@@ -37,6 +37,8 @@ As both stops 'A' and 'L' have the same coordinates, depending on the stop selec
 Below is a gif illustrating this change: 
 
 *Change is on the stop at the top left*
+
+
 !["Stop change"](https://github.com/leeivana/rose-rocket/blob/master/docs/stop-change.gif?raw=true)
 
 ## Form structure
