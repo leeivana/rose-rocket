@@ -19,6 +19,9 @@ Make sure that the server runs on port 3000
 ```
 Start client using `npm start` in the main directory.
 
+### Screenshots
+!["Screenshot of Application"](https://github.com/leeivana/rose-rocket/blob/master/docs/Screenshot.png?raw=true)
+
 ### Dependencies 
 * React
 * React-DOM
