@@ -4,8 +4,8 @@ import Path from './Path';
 import CurrentCell from './CurrentCell';
 import './Board.css';
 
-const CELL_SIZE = window.innerHeight/105;
-const WIDTH = window.innerWidth/2;
+const CELL_SIZE = window.innerHeight/103;
+const WIDTH = window.innerWidth/3;
 const HEIGHT = window.innerHeight;
 class Board extends Component {
   constructor(props) {
