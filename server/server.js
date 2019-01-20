@@ -21,7 +21,7 @@ fastify.ready(err => {
   })
 })
 
-fastify.listen(3001, err => {
+fastify.listen(3000, err => {
   if (err) throw err
-  console.log('listening on port 3001')
+  console.log('listening on port 3000')
 })
