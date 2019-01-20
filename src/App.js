@@ -13,7 +13,7 @@ class App extends Component {
       previousLegID: '',
       legProgress: '',
     }
-    this.socket = new WebSocket("ws://localhost:3000");
+    this.socket = new WebSocket("ws://localhost:3001");
   }
   componentDidMount = () => {
     this.socket.addEventListener("open", event => {
@@ -29,9 +29,9 @@ class App extends Component {
     }
     this.setState({fetching: true});
     Promise.all([
-      fetch('http://localhost:3000/legs'),
-      fetch('http://localhost:3000/stops'),
-      fetch('http://localhost:3000/driver')
+      fetch('http://localhost:3001/legs'),
+      fetch('http://localhost:3001/stops'),
+      fetch('http://localhost:3001/driver')
     ])
     .then(([res1, res2, res3]) => Promise.all([res1.json(), res2.json(), res3.json()]))
     .then(([legs, stops, driver]) => this.setState({
@@ -48,7 +48,7 @@ class App extends Component {
     this.setState(previousState => ({
       previousLegID: previousState.activeLegID,
     }))
-    fetch('http://localhost:3000/driver', {
+    fetch('http://localhost:3001/driver', {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({activeLegID, legProgress: legProgress * 100})
