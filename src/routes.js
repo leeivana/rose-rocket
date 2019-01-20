@@ -3,10 +3,6 @@ const stopData = require('../data/stopData');
 const driverData = require('../data/driverData');
 
 async function routes (fastify, options) {  
-  fastify.get('/', async (request, reply) => {
-    return { info: 'main' }
-  })
-
   fastify.get('/legs', async(request, reply) => {
     return { legData }
   })
