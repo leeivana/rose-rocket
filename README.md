@@ -6,7 +6,7 @@ App created with ReactJS, Fastify and Websockets helps visualize routes and driv
 Fork and clone the respository
 
 ```
-git clone git@github.com:leeivana/rose-rocket/.git
+git clone git@github.com:leeivana/rose-rocket.git
 cd rose-rocket
 Install dependencies using npm install
 ```

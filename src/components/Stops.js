@@ -6,11 +6,14 @@ class Stops extends Component {
       <div className="Cell" style={{
         left: `${cell_size * x + 1}px`,
         top: `${cell_size * y + 1}px`,
-        width: `${cell_size - 1}px`,
         height: `${cell_size - 1}px`,
         fontWeight: 500,
       }}>
-        {stopName}
+      {stopName === 'L' ? 
+        'A, L'
+        :
+        stopName
+      }
       </div>
     );
   }
