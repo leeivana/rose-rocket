@@ -21,7 +21,6 @@ Start client using `npm start` in the main directory.
 
 ### Screenshots
 !["Screenshot of Application"](https://github.com/leeivana/rose-rocket/blob/master/docs/Screenshot.png?raw=true)
-!["Dynamically Changing Stop Name"](https://github.com/leeivana/rose-rocket/blob/master/docs/stop-change.gif?raw=true)
 
 ### Dependencies 
 * React
