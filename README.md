@@ -12,10 +12,12 @@ Install dependencies using npm install
 ```
 
 Start the server
+
+*Make sure that the server runs on port 3000*
+
 ```
 cd server
 Start the server using node server
-Make sure that the server runs on port 3000
 ```
 Start client using `npm start` in the main directory.
 
