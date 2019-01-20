@@ -19,5 +19,12 @@ Start the server using node server
 Start client using `npm start` in the main directory.
 
 ### Dependencies 
+* React
+* React-DOM
+* Cors
+* Reactstrap
+* 
 
 ### devDependencies 
+* node-sass
+* 
