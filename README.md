@@ -12,15 +12,19 @@ Install dependencies using npm install
 ```
 
 Start the server
+
+*Make sure that the server runs on port 3000*
+
 ```
 cd server
 Start the server using node server
-Make sure that the server runs on port 3000
 ```
 Start client using `npm start` in the main directory.
 
 ### Screenshots
 !["Screenshot of Application"](https://github.com/leeivana/rose-rocket/blob/master/docs/Screenshot.png?raw=true)
+
+For more information on features, please refer to: [Features.md](https://github.com/leeivana/rose-rocket/blob/master/docs/FEATURES.md)
 
 ### Dependencies 
 * React
