@@ -31,8 +31,13 @@ All routes are defined in `src/routes.js`. There are 4 routes:
 
 ## Grid  
 The grid is created in `Board.js`, where the board is rendered within a single `<div>` and `<div>` are also used to draw each cell. The 
-component is rendered with an x and y component to help map out coordinates on the grid itself. The cell size, width and height of the grid
-is dependent on `window.innerHeight` and `window.innerWidth` but this can be changed in `Board.js`. 
+component is rendered with an x and y component to help map out coordinates on the grid itself. The cell size, width and height of the grid is dependent on `window.innerHeight` and `window.innerWidth` but this can be changed in `Board.js`. 
+
+As both stops 'A' and 'L' have the same coordinates, depending on the stop selected, the stop name will dynamically change. 
+Below is a gif illustrating this change: 
+
+*Change is on the stop at the top left*
+!["Stop change"](https://github.com/leeivana/rose-rocket/blob/master/docs/stop-change.gif?raw=true)
 
 ## Form structure
 The form consists of three major components: the dropdown selector for the legID, a input field for the leg process percentage and a 
@@ -48,7 +53,7 @@ and a message sent to the Websockets upon clicking submit.
 Upon clicking the submit button on the form, the `updateInfo` function in `App.js` is called. Via a fetch, a put request is sent to the 
 server that sends the updated legID and leg progress percentage, which updates the information on the database. 
 
-## Websockets 
+### Websockets 
 Following the put request, a message is set through a Websocket connection containing all updated information. The websocket sends the 
 information to all of the connected clients and the client calls `setState` on the payload recieved from the websocket, updating information
 shown on the grid. 
