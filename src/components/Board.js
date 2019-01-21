@@ -31,14 +31,26 @@ class Board extends Component {
     }
   }
 
+
+
   calculatePath = (legID) => {
     const stops = legID.split('');
     const coordinates = this.props.stops.filter((stop) => {
       return stop.name === stops[0] || stop.name === stops[1]
     });
+    const index = this.props.stops.map((stop) => { return stop.name; }).indexOf(coordinates[0].name);
     const xDifference = Math.abs(coordinates[0].x - coordinates[1].x)
     const yDifference = Math.abs(coordinates[0].y - coordinates[1].y);
     this.setPaths(coordinates, xDifference, yDifference);
+    this.setTotalPath(index);
+  }
+
+  setTotalPath = (startStopIndex) => {
+    const previousStops = [];
+    for(let i = 0; i < startStopIndex; i++) {
+      previousStops.push(this.props.stops[i]);
+    }
+    
   }
 
   setPaths = (coordinates, xDifference, yDifference) => {
