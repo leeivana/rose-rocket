@@ -7,7 +7,7 @@
     "cors": "^2.8.5",
     "fastify": "^1.13.4",
     "fastify-ws": "^1.0.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3",
